@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Student Management System</title>
+<link rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+    crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<style>
+    body {
+        background: linear-gradient(to right, #f8f9fa, #e9ecef);
+        color: #333;
+    }
+    .container {
+        margin-top: 20px;
+    }
+    .table {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .navbar {
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .btn-primary, .btn-danger {
+        transition: background-color 0.3s ease;
+    }
+    .btn-primary:hover, .btn-danger:hover {
+        opacity: 0.8;
+    }
+    .search-bar {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+</style>
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+  <!-- Brand -->
+  <a class="navbar-brand" href="/">Student Management System</a>
+
+  <!-- Toggler/collapsibe Button -->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <!-- Navbar links -->
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/students}">Student Management</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/teachers}">Teacher Management</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <h1>List Teachers</h1>
+    </div>
+    
+    <!-- Search bar -->
+    <div class="row mb-3">
+        <div class="col-md-4 search-bar">
+            <input type="text" class="form-control" id="searchInput" placeholder="Search Teachers by name or email" onkeyup="filterTable()">
+        </div>
+    </div>
+    
+   <!-- <div class="row">
+        <div class="col-lg-3">
+            <a th:href="@{/students/new}" class="btn btn-primary btn-sm mb-3">Add Student</a>
+        </div>
+    </div>-->
+<br>
+<br>
+    <table class="table table-striped table-bordered" id="teachersTable">
+        <thead class="table-dark">
+            <tr>
+                <th onclick="sortTable(0)">Teacher First Name</th>
+                <th >Teacher Last Name</th>
+				<th >Subjects</th>
+                <th >Contact no.</th>
+                <th >Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            <tr th:each="teacher : ${teachers}">
+                <td th:text="${teacher.firstName}"></td>
+                <td th:text="${teacher.lastName}"></td>
+				<td th:text="${teacher.subjects}"></td>
+                <td th:text="${teacher.phone}"></td>
+                <td th:text="${teacher.email}"></td>
+                <td>
+                    <a th:href="@{/teachers/edit/{id}(id=${teacher.id})}" class="btn btn-primary">Update</a>
+                    
+                    <!-- Delete with confirmation dialog -->
+                    <a th:href="@{/teachers/{id}(id=${teacher.id})}" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+	<br>
+	<div class="row">
+	       <div class="col-lg-3">
+	           <a th:href="@{/teachers/new}" class="btn btn-primary btn-sm mb-3">Add Teacher</a>
+	       </div>
+	</div>
+</div>
+
+<script>
+function filterTable() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("searchInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("teachersTable");
+    tr = table.getElementsByTagName("tr");
+    for (i = 1; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0]; // Change index for different columns
+        if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+}
+
+function sortTable(n) {
+    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+    table = document.getElementById("teachersTable");
+    switching = true;
+    dir = "asc"; // Set the sorting direction to ascending
+    while (switching) {
+        switching = false;
+        rows = table.rows;
+        for (i = 1; i < (rows.length - 1); i++) {
+            shouldSwitch = false;
+            x = rows[i].getElementsByTagName("TD")[n];
+            y = rows[i + 1].getElementsByTagName("TD")[n];
+            if (dir === "asc") {
+                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                    shouldSwitch = true;
+                    break;
+                }
+            } else if (dir === "desc") {
+                if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                    shouldSwitch = true;
+                    break;
+                }
+            }
+        }
+        if (shouldSwitch) {
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            switchcount++;
+        } else {
+            if (switchcount === 0 && dir === "asc") {
+                dir = "desc";
+                switching = true;
+            }
+        }
+    }
+}
+</script>
+</body>
+</html>

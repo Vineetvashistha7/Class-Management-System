@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management System</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+       body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+            background-image: url('/image/student.jpg'); /* Path to the background image */
+            background-size: cover; /* Makes the image cover the entire background */
+            background-position: center; /* Centers the background image */
+            background-repeat: no-repeat; /* Prevents repeating the background */
+			
+        }
+		
+        .features-container {
+            background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent background */
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 20px 0;
+            transition: transform 0.3s, box-shadow 0.3s, filter 0.3s; /* Smooth transition for effects */
+        }
+        .features-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .features-list {
+            list-style-type: none;
+            padding: 0;
+            text-align: center;
+        }
+        .features-list li {
+            font-size: 16px;
+            margin: 10px 0;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s; /* Smooth transition for hover effects */
+            border-radius: 5px;
+        }
+        .features-list li:hover {
+            transform: translateY(-5px); /* Slightly moves the item up */
+            background-color: #e3f2fd; /* Light blue background on hover */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a shadow */
+        }
+        .features-list li:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+        <!-- Brand -->
+        <a class="navbar-brand" href="#">Student Management System</a>
+
+        <!-- Toggler/collapsibe Button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navbar links -->
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/students">Student Management</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="">Teacher Management</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Features Section -->
+    <div class="features-container">
+        <h2>Features of Student Management System</h2>
+        <ul class="features-list">
+            <li>Efficient data collection and storage</li>
+            <li>Student record management</li>
+            <li>Easy search and retrieval of student data</li>
+            <li>Reports and analysis of student performance</li>
+            <li>Secure and user-friendly interface</li>
+        </ul>
+    </div>
+
+</body>
+</html>
